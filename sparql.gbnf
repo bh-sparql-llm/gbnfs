@@ -1,0 +1,36 @@
+# SPARQL 1.1 Grammar in GBNF format
+
+root ::= QueryUnit
+
+QueryUnit ::= Query
+Query ::= Prologue SelectQuery
+
+Prologue ::= (BaseDecl | PrefixDecl)*
+
+BaseDecl ::= "BASE" ws IRIREF
+PrefixDecl ::= "PREFIX" ws PNAMENS ws IRIREF
+
+SelectQuery ::= SelectClause ws DatasetClause*
+SelectClause ::= "SELECT" ws ("DISTINCT" ws | "REDUCED" ws)?
+
+DatasetClause ::= "FROM" ws (DefaultGraphClause | NamedGraphClause)
+DefaultGraphClause ::= SourceSelector
+NamedGraphClause ::= "NAMED" ws SourceSelector
+SourceSelector ::= iri
+WhereClause ::= "WHERE"? ws GroupGraphPattern
+
+GroupGraphPattern ::= "{" "}"
+
+iri ::= IRIREF | PrefixedName
+PrefixedName ::= PNAMELN | PNAMENS
+
+IRIREF ::= "<" [^>]* ">"
+PNAMELN ::= PNAMENS PNLOCAL
+PNAMENS ::= PNPREFIX? ":"
+PNPREFIX ::= PNCHARSBASE ((PNCHARS | ".")* PNCHARS)?
+PNCHARSBASE ::= [A-Z] | [a-z]
+PNCHARSU ::= PNCHARSBASE | "_"
+PNCHARS ::= PNCHARSBASE | "-" | [0-9]
+PNLOCAL ::= PNCHARSU
+
+ws ::= ([ \t\n]+)
