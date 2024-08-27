@@ -29,50 +29,50 @@ LimitOffsetClauses    ::=    LimitClause OffsetClause? |
                                             OffsetClause LimitClause?
 LimitClause    ::=    [lL][iI][mM][iI][tT] INTEGER
 OffsetClause    ::=    [oO][fF][fF][sS][eE][tT] INTEGER
-ValuesClause    ::=    ( "VALUES" DataBlock )?
+ValuesClause    ::=    ( [vV][aA][lL][uU][eE][sS] DataBlock )?
 Update    ::=    Prologue ( Update1 ( ";" Update )? )?
 Update1    ::=    Load | Clear | Drop | Add | Move | Copy | Create | InsertData | DeleteData | DeleteWhere | Modify
-Load    ::=    "LOAD" "SILENT"? iri ( "INTO" GraphRef )?
-Clear    ::=    "CLEAR" "SILENT"? GraphRefAll
-Drop    ::=    "DROP" "SILENT"? GraphRefAll
-Create    ::=    "CREATE" "SILENT"? GraphRef
-Add    ::=    "ADD" "SILENT"? GraphOrDefault "TO" GraphOrDefault
-Move    ::=    "MOVE" "SILENT"? GraphOrDefault "TO" GraphOrDefault
-Copy    ::=    "COPY" "SILENT"? GraphOrDefault "TO" GraphOrDefault
-InsertData    ::=    "INSERT DATA" QuadData
-DeleteData    ::=    "DELETE DATA" QuadData
-DeleteWhere    ::=    "DELETE WHERE" QuadPattern
-Modify    ::=    ( "WITH" iri )? ( DeleteClause InsertClause? | InsertClause ) UsingClause* "WHERE" GroupGraphPattern
-DeleteClause    ::=    "DELETE" QuadPattern
-InsertClause    ::=    "INSERT" QuadPattern
-UsingClause    ::=    "USING" ( iri | "NAMED" iri )
-GraphOrDefault    ::=    "DEFAULT" | "GRAPH"? iri
-GraphRef    ::=    "GRAPH" iri
-GraphRefAll    ::=    GraphRef | "DEFAULT" | "NAMED" | "ALL"
+Load    ::=    [lL][oO][aA][dD] [sS][iI][lL][eE][nN][tT]? iri ( [iI][nN][tT][oO] GraphRef )?
+Clear    ::=    [cC][lL][eE][aA][rR] [sS][iI][lL][eE][nN][tT]? GraphRefAll
+Drop    ::=    [dD][rR][oO][pP] [sS][iI][lL][eE][nN][tT]? GraphRefAll
+Create    ::=    [cC][rR][eE][aA][tT][eE] [sS][iI][lL][eE][nN][tT]? GraphRef
+Add    ::=    [aA][dD][dD] [sS][iI][lL][eE][nN][tT]? GraphOrDefault [tT][oO] GraphOrDefault
+Move    ::=    [mM][oO][vV][eE] [sS][iI][lL][eE][nN][tT]? GraphOrDefault [tT][oO] GraphOrDefault
+Copy    ::=    [cC][oO][pP][yY] [sS][iI][lL][eE][nN][tT]? GraphOrDefault [tT][oO] GraphOrDefault
+InsertData    ::=    [iI][nN][sS][eE][rR][tT]" "[dD][aA][tT][aA] QuadData
+DeleteData    ::=    [dD][eE][lL][eE][tT][eE]" "[dD][aA][tT][aA] QuadData
+DeleteWhere    ::=    [dD][eE][lL][eE][tT][eE]" "[wW][hH][eE][rR][eE] QuadPattern
+Modify    ::=    ( [wW][iI][tT][hH] iri )? ( DeleteClause InsertClause? | InsertClause ) UsingClause* [wW][hH][eE][rR][eE] GroupGraphPattern
+DeleteClause    ::=    [dD][eE][lL][eE][tT][eE] QuadPattern
+InsertClause    ::=    [iI][nN][sS][eE][rR][tT] QuadPattern
+UsingClause    ::=    [uU][sS][iI][nN][gG] ( iri | [nN][aA][mM][eE][dD] iri )
+GraphOrDefault    ::=    [dD][eE][fF][aA][uU][lL][tT] | [gG][rR][aA][pP][hH]? iri
+GraphRef    ::=    [gG][rR][aA][pP][hH] iri
+GraphRefAll    ::=    GraphRef | [dD][eE][fF][aA][uU][lL][tT] | [nN][aA][mM][eE][dD] | [aA][lL][lL]
 QuadPattern    ::=    "{" Quads "}"
 QuadData    ::=    "{" Quads "}"
 Quads    ::=    TriplesTemplate? ( QuadsNotTriples "."? TriplesTemplate? )*
-QuadsNotTriples    ::=    "GRAPH" VarOrIri "{" TriplesTemplate? "}"
+QuadsNotTriples    ::=    [gG][rR][aA][pP][hH] VarOrIri "{" TriplesTemplate? "}"
 TriplesTemplate    ::=    TriplesSameSubject ( "." TriplesTemplate? )?
 GroupGraphPattern    ::=    "{" WS* ( SubSelect | GroupGraphPatternSub ) WS* "}"
 GroupGraphPatternSub    ::=    TriplesBlock? ( GraphPatternNotTriples WS* "."? WS* TriplesBlock? )*
 TriplesBlock    ::=    TriplesSameSubjectPath ( WS* "." WS* TriplesBlock? )?
 GraphPatternNotTriples    ::=    GroupOrUnionGraphPattern | OptionalGraphPattern | MinusGraphPattern | GraphGraphPattern | ServiceGraphPattern | Filter | Bind | InlineData
-OptionalGraphPattern    ::=    "OPTIONAL" WS* GroupGraphPattern
-GraphGraphPattern    ::=    "GRAPH" VarOrIri GroupGraphPattern
-ServiceGraphPattern    ::=    "SERVICE" "SILENT"? VarOrIri GroupGraphPattern
-Bind    ::=    "BIND" "(" Expression "AS" Var ")"
-InlineData    ::=    "VALUES" DataBlock
+OptionalGraphPattern    ::=    [oO][pP][tT][iI][oO][nN][aA][lL] WS* GroupGraphPattern
+GraphGraphPattern    ::=    [gG][rR][aA][pP][hH] VarOrIri GroupGraphPattern
+ServiceGraphPattern    ::=    [sS][eE][rR][vV][iI][cC][eE] [sS][iI][lL][eE][nN][tT]? VarOrIri GroupGraphPattern
+Bind    ::=    [bB][iI][nN][dD] "(" Expression [aA][sS] Var ")"
+InlineData    ::=    [vV][aA][lL][uU][eE][sS] DataBlock
 DataBlock    ::=    InlineDataOneVar | InlineDataFull
 InlineDataOneVar    ::=    Var "{" DataBlockValue* "}"
 InlineDataFull    ::=    ( NIL | "(" Var* ")" ) "{" ( "(" DataBlockValue* ")" | NIL )* "}"
-DataBlockValue    ::=    iri | RDFLiteral | NumericLiteral | BooleanLiteral | "UNDEF"
-MinusGraphPattern    ::=    "MINUS" GroupGraphPattern
-GroupOrUnionGraphPattern    ::=    GroupGraphPattern ( "UNION" GroupGraphPattern )*
-Filter    ::=    "FILTER" WS* Constraint
+DataBlockValue    ::=    iri | RDFLiteral | NumericLiteral | BooleanLiteral | [uU][nN][dD][eE][fF]
+MinusGraphPattern    ::=    [mM][iI][nN][uU][sS] GroupGraphPattern
+GroupOrUnionGraphPattern    ::=    GroupGraphPattern ( [uU][nN][iI][oO][nN] GroupGraphPattern )*
+Filter    ::=    [fF][iI][lL][tT][eE][rR] WS* Constraint
 Constraint    ::=    BrackettedExpression | BuiltInCall | FunctionCall
 FunctionCall    ::=    iri ArgList
-ArgList    ::=    NIL | "(" "DISTINCT"? Expression ( "," Expression )* ")"
+ArgList    ::=    NIL | "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ( "," Expression )* ")"
 ExpressionList    ::=    NIL | "(" Expression ( "," Expression )* ")"
 ConstructTemplate    ::=    "{" ConstructTriples? "}"
 ConstructTriples    ::=    TriplesSameSubject ( "." ConstructTriples? )?
@@ -115,7 +115,7 @@ Expression    ::=    ConditionalOrExpression
 ConditionalOrExpression    ::=    ConditionalAndExpression ( "||" ConditionalAndExpression )*
 ConditionalAndExpression    ::=    ValueLogical ( "&&" ValueLogical )*
 ValueLogical    ::=    RelationalExpression
-RelationalExpression    ::=    NumericExpression ( WS* "=" WS* NumericExpression | "!=" NumericExpression | "<" NumericExpression | ">" NumericExpression | "<=" NumericExpression | ">=" NumericExpression | "IN" ExpressionList | "NOT" "IN" ExpressionList )?
+RelationalExpression    ::=    NumericExpression ( WS* "=" WS* NumericExpression | "!=" NumericExpression | "<" NumericExpression | ">" NumericExpression | "<=" NumericExpression | ">=" NumericExpression | [iI][nN] ExpressionList | [nN][oO][tT] [iI][nN] ExpressionList )?
 NumericExpression    ::=    AdditiveExpression
 AdditiveExpression    ::=    MultiplicativeExpression ( "+" MultiplicativeExpression | "-" MultiplicativeExpression | ( NumericLiteralPositive | NumericLiteralNegative ) ( ( "*" UnaryExpression ) | ( "/" UnaryExpression ) )* )*
 MultiplicativeExpression    ::=    UnaryExpression ( "*" UnaryExpression | "/" UnaryExpression )*
@@ -126,51 +126,50 @@ UnaryExpression    ::=     "!" PrimaryExpression |
 PrimaryExpression    ::=    BrackettedExpression | BuiltInCall | iriOrFunction | RDFLiteral | NumericLiteral | BooleanLiteral | Var
 BrackettedExpression    ::=    "(" WS* Expression WS* ")"
 BuiltInCall    ::=    Aggregate |
-                                           "STR" "(" Expression ")" |
-                                           "LANG" "(" Expression ")" |
-                                           "LANGMATCHES" "(" Expression "," Expression ")" |
-                                           "DATATYPE" "(" Expression ")" |
-                                           "BOUND" "(" Var ")" |
-                                           "IRI" "(" Expression ")" |
-                                           "URI" "(" Expression ")" |
-                                           "BNODE" ( "(" Expression ")" | NIL ) |
-                                           "RAND" NIL |
-                                           "ABS" "(" Expression ")" |
-                                           "CEIL" "(" Expression ")" |
-                                           "FLOOR" "(" Expression ")" |
-                                           "ROUND" "(" Expression ")" |
-                                           "CONCAT" ExpressionList |
+                                           [sS][tT][rR] "(" Expression ")" |
+                                           [lL][aA][nN][gG] "(" Expression ")" |
+                                           [lL][aA][nN][gG][mM][aA][tT][cC][hH][eE][sS] "(" Expression "," Expression ")" |
+                                           [dD][aA][tT][aA][tT][yY][pP][eE] "(" Expression ")" |
+                                           [bB][oO][uU][nN][dD] "(" Var ")" |
+                                           [uU][rR][iI] "(" Expression ")" |
+                                           [bB][nN][oO][dD][eE] ( "(" Expression ")" | NIL ) |
+                                           [rR][aA][nN][dD] NIL |
+                                           [aA][bB][sS] "(" Expression ")" |
+                                           [cC][eE][iI][lL] "(" Expression ")" |
+                                           [fF][lL][oO][oO][rR] "(" Expression ")" |
+                                           [rR][oO][uU][nN][dD] "(" Expression ")" |
+                                           [cC][oO][nN][cC][aA][tT] ExpressionList |
                                            SubstringExpression |
-                                           "STRLEN" "(" Expression ")" |
+                                           [sS][tT][rR][lL][eE][nN] "(" Expression ")" |
                                            StrReplaceExpression |
-                                           "UCASE" "(" Expression ")" |
-                                           "LCASE" "(" Expression ")" |
-                                           "ENCODE_FOR_URI" "(" Expression ")" |
-                                           "CONTAINS" "(" Expression "," Expression ")" |
-                                           "STRSTARTS" "(" Expression "," Expression ")" |
-                                           "STRENDS" "(" Expression "," Expression ")" |
-                                           "STRBEFORE" "(" Expression "," Expression ")" |
-                                           "STRAFTER" "(" Expression "," Expression ")" |
-                                           "YEAR" "(" Expression ")" |
-                                           "MONTH" "(" Expression ")" |
-                                           "DAY" "(" Expression ")" |
-                                           "HOURS" "(" Expression ")" |
-                                           "MINUTES" "(" Expression ")" |
-                                           "SECONDS" "(" Expression ")" |
-                                           "TIMEZONE" "(" Expression ")" |
-                                           "TZ" "(" Expression ")" |
-                                           "NOW" NIL |
-                                           "UUID" NIL |
-                                           "STRUUID" NIL |
-                                           "MD5" "(" Expression ")" |
-                                           "SHA1" "(" Expression ")" |
-                                           "SHA256" "(" Expression ")" |
-                                           "SHA384" "(" Expression ")" |
-                                           "SHA512" "(" Expression ")" |
-                                           "COALESCE" ExpressionList |
-                                           "IF" "(" Expression "," Expression "," Expression ")" |
-                                           "STRLANG" "(" Expression "," Expression ")" |
-                                           "STRDT" "(" Expression "," Expression ")" |
+                                           [uU][cC][aA][sS][eE] "(" Expression ")" |
+                                           [lL][cC][aA][sS][eE] "(" Expression ")" |
+                                           [eE][nN][cC][oO][dD][eE]"_"[fF][oO][rR]"_"[uU][rR][iI] "(" Expression ")" |
+                                           [cC][oO][nN][tT][aA][iI][nN][sS] "(" Expression "," Expression ")" |
+                                           [sS][tT][rR][sS][tT][aA][rR][tT][sS] "(" Expression "," Expression ")" |
+                                           [sS][tT][rR][eE][nN][dD][sS] "(" Expression "," Expression ")" |
+                                           [sS][tT][rR][bB][eE][fF][oO][rR][eE] "(" Expression "," Expression ")" |
+                                           [sS][tT][rR][aA][fF][tT][eE][rR] "(" Expression "," Expression ")" |
+                                           [yY][eE][aA][rR] "(" Expression ")" |
+                                           [mM][oO][nN][tT][hH] "(" Expression ")" |
+                                           [dD][aA][yY] "(" Expression ")" |
+                                           [hH][oO][uU][rR][sS] "(" Expression ")" |
+                                           [mM][iI][nN][uU][tT][eE][sS] "(" Expression ")" |
+                                           [sS][eE][cC][oO][nN][dD][sS] "(" Expression ")" |
+                                           [tT][iI][mM][eE][zZ][oO][nN][eE] "(" Expression ")" |
+                                           [tT][zZ] "(" Expression ")" |
+                                           [nN][oO][wW] NIL |
+                                           [uU][uU][iI][dD] NIL |
+                                           [sS][tT][rR][uU][uU][iI][dD] NIL |
+                                           [mM][dD]"5" "(" Expression ")" |
+                                           [sS][hH][aA]"1" "(" Expression ")" |
+                                           [sS][hH][aA]"256" "(" Expression ")" |
+                                           [sS][hH][aA]"384" "(" Expression ")" |
+                                           [sS][hH][aA][55]"12" "(" Expression ")" |
+                                           [cC][oO][aA][lL][eE][sS][cC][eE] ExpressionList |
+                                           [iI][fF] "(" Expression "," Expression "," Expression ")" |
+                                           [sS][tT][rR][lL][aA][nN][gG] "(" Expression "," Expression ")" |
+                                           [sS][tT][rR][dD][tT] "(" Expression "," Expression ")" |
                                            "sameTerm" "(" Expression "," Expression ")" |
                                            "isIRI" "(" Expression ")" |
                                            "isURI" "(" Expression ")" |
@@ -180,18 +179,18 @@ BuiltInCall    ::=    Aggregate |
                                            RegexExpression |
                                            ExistsFunc |
                                            NotExistsFunc
-RegexExpression    ::=    "REGEX" "(" Expression "," Expression ( "," Expression )? ")"
-SubstringExpression    ::=    "SUBSTR" "(" Expression "," Expression ( "," Expression )? ")"
-StrReplaceExpression    ::=    "REPLACE" "(" Expression "," Expression "," Expression ( "," Expression )? ")"
-ExistsFunc    ::=    "EXISTS" GroupGraphPattern
-NotExistsFunc    ::=    "NOT" "EXISTS" GroupGraphPattern
-Aggregate    ::=    "COUNT" "(" "DISTINCT"? ( "*" | Expression ) ")" |
-                                            "SUM" "(" "DISTINCT"? Expression ")" |
-                                            "MIN" "(" "DISTINCT"? Expression ")" |
-                                            "MAX" "(" "DISTINCT"? Expression ")" |
-                                            "AVG" "(" "DISTINCT"? Expression ")" |
-                                            "SAMPLE" "(" "DISTINCT"? Expression ")" |
-                                            "GROUP_CONCAT" "(" "DISTINCT"? Expression ( ";" "SEPARATOR" "=" String )? ")"
+RegexExpression    ::=    [rR][eE][gG][eE][xX] "(" Expression "," Expression ( "," Expression )? ")"
+SubstringExpression    ::=    [sS][uU][bB][sS][tT][rR] "(" Expression "," Expression ( "," Expression )? ")"
+StrReplaceExpression    ::=    [rR][eE][pP][lL][aA][cC][eE] "(" Expression "," Expression "," Expression ( "," Expression )? ")"
+ExistsFunc    ::=    [eE][xX][iI][sS][tT][sS] GroupGraphPattern
+NotExistsFunc    ::=    [nN][oO][tT] [eE][xX][iI][sS][tT][sS] GroupGraphPattern
+Aggregate    ::=    [cC][oO][uU][nN][tT] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? ( "*" | Expression ) ")" |
+                                            [sS][uU][mM] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ")" |
+                                            [mM][iI][nN] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ")" |
+                                            [mM][aA][xX] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ")" |
+                                            [aA][vV][gG] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ")" |
+                                            [sS][aA][mM][pP][lL][eE] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ")" |
+                                            [gG][rR][oO][uU][pP]"_"[cC][oO][nN][cC][aA][tT] "(" [dD][iI][sS][tT][iI][nN][cC][tT]? Expression ( ";" [sS][eE][pP][aA][rR][aA][tT][oO][rR] "=" String )? ")"
 iriOrFunction    ::=    iri ArgList?
 RDFLiteral    ::=    String ( LANGTAG | ( "^^" iri ) )?
 NumericLiteral    ::=    NumericLiteralUnsigned | NumericLiteralPositive | NumericLiteralNegative
