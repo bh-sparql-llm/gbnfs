@@ -1,0 +1,27 @@
+PREFIX fhir: <http://hl7.org/fhir/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?patient ?effectiveDate
+WHERE {
+  ?observation a fhir:Observation ;
+               fhir:code ?codeableConcept ;
+               fhir:subject ?patientReference ;
+               fhir:effective ?effective .
+
+  ?codeableConcept fhir:coding ?coding .
+  ?coding fhir:code "72166-2" ;
+          fhir:system <http://loinc.org> .
+
+  # Extract patient reference
+  ?patientReference fhir:link ?patient .
+
+  # Extract effective date
+  OPTIONAL {
+    ?effective fhir:v ?effectiveDate
+    FILTER(DATATYPE(?effectiveDate) = <http://www.w3.org/2001/XMLSchema#dateTime>)
+  }
+  OPTIONAL {
+    ?effective fhir:v ?effectiveDate
+    FILTER(DATATYPE(?effectiveDate) = <http://www.w3.org/2001/XMLSchema#date>)
+  }
+}
